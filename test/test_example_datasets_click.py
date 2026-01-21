@@ -4,6 +4,7 @@ from openminds import Collection
 from bids2openminds.converter import convert_click
 from click.testing import CliRunner
 
+DEFAULT_OPENMINDS_VERSION = "v3"
 (test_data_set, number_of_openminds_files) = ("ds003", 143)
 
 
@@ -13,7 +14,7 @@ def test_example_datasets_click():
     result = runner.invoke(convert_click, [test_dir])
     assert result.exit_code == 0
     c = Collection()
-    c.load(os.path.join(test_dir, "openminds.jsonld"))
+    c.load(os.path.join(test_dir, "openminds.jsonld"), version=DEFAULT_OPENMINDS_VERSION)
 
 
 def test_example_datasets_click_seperate_files():
@@ -36,4 +37,4 @@ def test_example_datasets_click_output_location():
         convert_click, ["-o", openminds_file, test_dir])
     assert result.exit_code == 0
     c = Collection()
-    c.load(openminds_file)
+    c.load(openminds_file, version=DEFAULT_OPENMINDS_VERSION)

@@ -7,7 +7,7 @@ import pathlib
 import shutil
 import platform
 
-
+DEFAULT_OPENMINDS_VERSION = "v3"
 dataset_labels = ["eeg_rest_fmri", "ds005"]
 
 
@@ -31,12 +31,12 @@ def load_collections():
             file.write(actual_data)
 
         reference_collection = Collection()
-        reference_collection.load(tempdir+test_standard_name)
+        reference_collection.load(tempdir+test_standard_name, version=DEFAULT_OPENMINDS_VERSION)
 
         bids2openminds.converter.convert(test_dataset, save_output=True)
         generated_collection = Collection()
         generated_collection.load(os.path.join(
-            test_dataset, "openminds.jsonld"))
+            test_dataset, "openminds.jsonld"), version=DEFAULT_OPENMINDS_VERSION)
 
         collections[dataset_label] = (
             reference_collection, generated_collection)
